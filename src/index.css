@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Fredoka:wght@500;600;700;900&family=Outfit:wght@500;700;900&family=Space+Grotesk:wght@600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Fredoka', 'Outfit', sans-serif;
+  --font-sports: 'Luckiest Guy', cursive;
+  --font-cartoon: 'Luckiest Guy', cursive;
+}
+
+@layer base {
+  html, body, #root {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    background-color: #0b1911;
+    font-family: 'Fredoka', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    user-select: none;
+  }
+}
+
+@layer utilities {
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes cardDrop {
+    0% { transform: scale(1.3) translateY(-20px); opacity: 0; }
+    70% { transform: scale(0.95); }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  @keyframes cardSlideUp {
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .font-sports {
+    font-family: 'Space Grotesk', monospace;
+  }
+
+  .animate-shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, rgba(251,191,36,0.15) 0%, rgba(255,255,255,0.45) 50%, rgba(251,191,36,0.15) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s infinite linear;
+  }
+
+  .animate-card-drop {
+    animation: cardDrop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .animate-card-slide {
+    animation: cardSlideUp 0.2s ease-out forwards;
+  }
+
+  .animate-pop {
+    animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Custom Glows and Shimmers for squad swap rarity cards */
+  @keyframes goldBreathe {
+    0%, 100% {
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.5), inset 0 0 8px rgba(245, 158, 11, 0.3), 3px 3px 0px 0px rgba(0,0,0,1);
+      border-color: #d97706;
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.95), inset 0 0 15px rgba(251, 191, 36, 0.6), 3px 3px 0px 0px rgba(0,0,0,1);
+      border-color: #fbbf24;
+    }
+  }
+
+  @keyframes blueBreathe {
+    0%, 100% {
+      box-shadow: 0 0 8px rgba(14, 165, 233, 0.4), inset 0 0 6px rgba(14, 165, 233, 0.2), 3px 3px 0px 0px rgba(0,0,0,1);
+      border-color: #0284c7;
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.9), inset 0 0 12px rgba(56, 189, 248, 0.5), 3px 3px 0px 0px rgba(0,0,0,1);
+      border-color: #38bdf8;
+    }
+  }
+
+  @keyframes retroBreathe {
+    0%, 100% {
+      box-shadow: 0 0 8px rgba(180, 83, 9, 0.4), inset 0 0 6px rgba(180, 83, 9, 0.2), 3px 3px 0px 0px rgba(0,0,0,1);
+      border-color: #b45309;
+    }
+    50% {
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.8), inset 0 0 12px rgba(245, 158, 11, 0.5), 3px 3px 0px 0px rgba(0,0,0,1);
+      border-color: #f59e0b;
+    }
+  }
+
+  @keyframes sparkleTwinkle {
+    0%, 100% { transform: scale(0.4) rotate(0deg); opacity: 0.15; }
+    50% { transform: scale(1.1) rotate(180deg); opacity: 0.95; }
+  }
+
+  @keyframes floatParticle {
+    0% { transform: translateY(15px) translateX(0) scale(0.6); opacity: 0; }
+    30% { opacity: 0.9; }
+    100% { transform: translateY(-50px) translateX(15px) scale(1); opacity: 0; }
+  }
+
+  @keyframes floatParticleOpposite {
+    0% { transform: translateY(15px) translateX(0) scale(0.6); opacity: 0; }
+    30% { opacity: 0.9; }
+    100% { transform: translateY(-50px) translateX(-15px) scale(1); opacity: 0; }
+  }
+
+  @keyframes sweepLaser {
+    0% { transform: translate(-100%, -100%) rotate(35deg); }
+    100% { transform: translate(150%, 150%) rotate(35deg); }
+  }
+
+  .glow-gold {
+    animation: goldBreathe 3s infinite ease-in-out;
+  }
+
+  .glow-blue {
+    animation: blueBreathe 3s infinite ease-in-out;
+  }
+
+  .glow-retro {
+    animation: retroBreathe 3.5s infinite ease-in-out;
+  }
+
+  .sparkle-slow {
+    animation: sparkleTwinkle 2.5s infinite ease-in-out;
+  }
+
+  .sparkle-fast {
+    animation: sparkleTwinkle 1.8s infinite ease-in-out;
+  }
+
+  .particle-float {
+    animation: floatParticle 4s infinite linear;
+  }
+
+  .particle-float-delay-1 {
+    animation: floatParticleOpposite 4.5s infinite linear;
+    animation-delay: 1.2s;
+  }
+
+  .particle-float-delay-2 {
+    animation: floatParticle 3.8s infinite linear;
+    animation-delay: 2.3s;
+  }
+
+  .particle-float-delay-3 {
+    animation: floatParticleOpposite 5s infinite linear;
+    animation-delay: 0.6s;
+  }
+
+  .sweep-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    z-index: 5;
+    pointer-events: none;
+    animation: sweepLaser 4.5s infinite linear;
+  }
+
+  .sweep-shimmer-blue {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(56, 189, 248, 0.5) 50%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    z-index: 5;
+    pointer-events: none;
+    animation: sweepLaser 4.2s infinite linear;
+  }
+
+  .sweep-shimmer-retro {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(251, 191, 36, 0.3) 50%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    z-index: 5;
+    pointer-events: none;
+    animation: sweepLaser 5.5s infinite linear;
+  }
+
+  /* CRT Retro Scanline */
+  .retro-scanlines::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%);
+    background-size: 100% 3px;
+    z-index: 8;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  @keyframes rotatePhone {
+    0%, 20% {
+      transform: rotate(0deg);
+    }
+    45%, 75% {
+      transform: rotate(90deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  .animate-rotatePhone {
+    animation: rotatePhone 3s ease-in-out infinite;
+  }
+
+  /* Force CSS landscape mode when user phone orientation is locked to portrait */
+  .force-landscape-container {
+    width: 100vh !important;
+    height: 100vw !important;
+    transform: rotate(90deg) !important;
+    transform-origin: top left !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 100vw !important;
+    overflow: hidden !important;
+    z-index: 40 !important;
+  }
+
+  /* 16:9 landscape mobile enhancements - locks entire game into a single non-scrolling screen */
+  @media (orientation: landscape) and (max-height: 520px) {
+    html, body, #root {
+      height: 100%;
+      max-height: 100%;
+      overflow: hidden !important;
+    }
+  }
+}
+
+

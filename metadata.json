@@ -1,0 +1,6 @@
+{
+  "name": "Squad Swap 2026",
+  "description": "Modern football card duel game with 18-turn matches, Double Up tactical synergies, penalty shootouts, and Top 11 squad showdowns.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
