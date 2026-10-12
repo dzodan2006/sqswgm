@@ -40,7 +40,7 @@ export const RulesModal: React.FC<RulesModalProps> = ({ onClose }) => {
               ⚽ 1. Match Flow (18 Turns / 90 Minutes)
             </h3>
             <p className="text-slate-300">
-              The match lasts exactly <strong className="text-white">18 turns</strong> (a 90-minute simulation where each turn represents 5 minutes). Each player always holds exactly <strong className="text-white">5 cards</strong> in hand. Turns are played alternately.
+              The match lasts exactly <strong className="text-white">18 turns</strong> (a 90-minute simulation where each turn represents 5 minutes). Each player always holds exactly <strong className="text-white">4 cards</strong> in hand. Turns are played alternately.
             </p>
             <p className="mt-2 text-slate-400 text-xs">
               When the first player plays a card on the pitch, the second player responds with a card of their choice. The card with the higher <strong className="text-amber-300 font-mono">Rating (1-100)</strong> wins the duel, and the winner claims <strong className="text-white">BOTH cards</strong> and places them into their <strong className="text-emerald-300">Squad Deck</strong> (pile of won cards).

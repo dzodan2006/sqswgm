@@ -16,7 +16,6 @@ import { TrophiesModal } from './components/TrophiesModal';
 import { TournamentBracket } from './components/TournamentBracket';
 import { GroupStandings } from './components/GroupStandings';
 import { WCNationSelect, Nation, AVAILABLE_NATIONS } from './components/WCNationSelect';
-import { MobileOrientationPrompt } from './components/MobileOrientationPrompt';
 
 // Fisher-Yates shuffle algorithm
 function shuffleArray<T>(array: T[]): T[] {
@@ -58,7 +57,6 @@ export default function App() {
   });
   const [isTrophiesOpen, setIsTrophiesOpen] = useState<boolean>(false);
   const [hasRecordedMatchStats, setHasRecordedMatchStats] = useState<boolean>(false);
-  const [forceCssLandscape, setForceCssLandscape] = useState<boolean>(false);
 
   // Preload and cache flag images in browser memory for instant rendering
   useEffect(() => {
@@ -441,8 +439,8 @@ export default function App() {
       return;
     }
 
-    const targetDrawP = turn === 1 ? 5 : 1;
-    const targetDrawO = turn === 1 ? 5 : 1;
+    const targetDrawP = turn === 1 ? 4 : 1;
+    const targetDrawO = turn === 1 ? 4 : 1;
 
     const neededP = Math.max(0, targetDrawP - drawnCountP);
     const neededO = Math.max(0, targetDrawO - drawnCountO);
@@ -513,11 +511,11 @@ export default function App() {
     }
   };
 
-  // Replenish hands to 5 cards from drawDeck with 100% duplicate protection
+  // Replenish hands to 4 cards from drawDeck with 100% duplicate protection
   const replenishHands = (customPHand: Card[], customOHand: Card[], customDeck?: Card[]) => {
     const activeDeck = customDeck || drawDeck;
-    const neededP = Math.max(0, 5 - customPHand.length);
-    const neededO = Math.max(0, 5 - customOHand.length);
+    const neededP = Math.max(0, 4 - customPHand.length);
+    const neededO = Math.max(0, 4 - customOHand.length);
 
     // Filter out cards already in player hands, played cards, or won decks
     const excludeList = [
@@ -922,15 +920,8 @@ export default function App() {
   return (
     <div 
       onContextMenu={(e) => e.preventDefault()}
-      className={`min-h-screen bg-slate-950 flex flex-col font-sans text-slate-100 antialiased overflow-x-hidden selection:bg-emerald-500 selection:text-slate-950 select-none ${
-        forceCssLandscape ? 'force-landscape-container' : ''
-      }`}
+      className="min-h-screen bg-slate-950 flex flex-col font-sans text-slate-100 antialiased overflow-x-hidden selection:bg-emerald-500 selection:text-slate-950 select-none"
     >
-      {/* Mobile Screen Orientation Prompt & Landscape Controls */}
-      <MobileOrientationPrompt 
-        forceCssLandscape={forceCssLandscape} 
-        onToggleForceCssLandscape={() => setForceCssLandscape(prev => !prev)} 
-      />
       
       {/* 1. Glavni Početni Meni (Arkada) */}
       {gamePhase === 'MAIN_MENU' && (
@@ -956,7 +947,7 @@ export default function App() {
 
       {/* 2. Teren i igra (Bez ogromnog gornjeg Navbara, sa kompaktnim ⏸️ Pauza dugmetom!) */}
       {(gamePhase === 'DRAW' || gamePhase === 'DUEL_PICK' || gamePhase === 'DUEL_REVEAL' || gamePhase === 'SHOOTOUT_ANIMATING' || gamePhase === 'TURN_RESULT') && (
-        <main className="flex-1 flex flex-col p-0.5 sm:p-2 max-w-5xl w-full mx-auto h-[100dvh] max-h-[100dvh] overflow-hidden justify-between">
+        <main className="flex-1 flex flex-col p-1 sm:p-3 max-w-7xl w-full mx-auto h-screen max-h-screen justify-center">
           <PitchBoard
             coach={coach}
             minute={minute}

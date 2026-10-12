@@ -4,7 +4,7 @@ import { getCountryFlag } from '../utils/flags';
 import { getPlayerCaricature } from '../utils/caricatures';
 
 // Eager load all available player images at build time to prevent 404 network requests or console.error outputs
-const AVAILABLE_PLAYERS = (import.meta as any).glob('/public/players-list/*.{webp,png,jpg,jpeg}', { eager: true });
+const AVAILABLE_PLAYERS = (import.meta as any).glob('/public/players/*.{webp,png,jpg,jpeg}', { eager: true });
 
 const resolveExistingImage = (candidates: string | string[]): string => {
   if (!candidates) return "";
@@ -14,7 +14,7 @@ const resolveExistingImage = (candidates: string | string[]): string => {
   // 1. Exact path or exact filename match
   for (const raw of list) {
     if (!raw) continue;
-    const directPath = `/public/players-list/${raw}`;
+    const directPath = `/public/players/${raw}`;
     if (AVAILABLE_PLAYERS[directPath]) return raw;
 
     const targetStem = raw.replace(/\.[^/.]+$/, "").toLowerCase().trim();
@@ -313,9 +313,9 @@ export const CardView: React.FC<CardViewProps> = ({
   }, [card?.id]);
 
   const sizeClasses = {
-    sm: 'w-11 h-17 sm:w-13 sm:h-20 md:w-15 md:h-23 text-[8px] sm:text-[9px] rounded-md sm:rounded-lg',
-    md: 'w-14 h-21 sm:w-17 sm:h-26 md:w-22 md:h-33 text-[8.5px] sm:text-xs rounded-lg sm:rounded-xl',
-    lg: 'w-18 h-27 sm:w-23 sm:h-35 md:w-28 md:h-42 text-[10px] sm:text-sm rounded-xl sm:rounded-2xl',
+    sm: 'w-18 h-28 sm:w-22 sm:h-34 text-xs rounded-xl',
+    md: 'w-24 h-38 sm:w-28 sm:h-44 md:w-32 md:h-50 text-sm rounded-2xl',
+    lg: 'w-32 h-50 sm:w-36 sm:h-56 md:w-40 md:h-64 text-base rounded-2xl sm:rounded-3xl',
   }[size];
 
   if (isFaceDown || !card) {
@@ -434,27 +434,25 @@ export const CardView: React.FC<CardViewProps> = ({
   const caricature = getPlayerCaricature(card.id, card.position);
   const flag = getCountryFlag(card.nationality);
   const detectedFilename = getPlayerImageFilename(card);
-  const baseUrl = import.meta.env.BASE_URL || './';
   let finalImageSrc = '';
   if (detectedFilename) {
-    finalImageSrc = `${baseUrl}players-list/${encodeURI(detectedFilename)}`;
+    finalImageSrc = `/players/${encodeURI(detectedFilename)}`;
   } else if (card.image) {
     let clean = card.image;
-    if (clean.startsWith('/players/')) {
-      clean = clean.replace('/players/', 'players-list/');
-    } else if (clean.startsWith('/players-list/')) {
-      clean = clean.replace('/players-list/', 'players-list/');
-    } else if (clean.startsWith('/')) {
-      clean = clean.slice(1);
+    if (clean.includes('players-list')) {
+      clean = clean.replace('players-list', 'players');
     }
-    finalImageSrc = `${baseUrl}${encodeURI(clean)}`;
+    if (!clean.startsWith('/')) {
+      clean = `/${clean}`;
+    }
+    finalImageSrc = encodeURI(clean);
   }
   
-  // Optimized image sizes for mobile & desktop
+  // Noticeably larger image sizes for better look & feel
   const imgSizeClass = {
-    sm: 'h-9 sm:h-12',
-    md: 'h-12 sm:h-16 md:h-20',
-    lg: 'h-16 sm:h-22 md:h-27',
+    sm: 'h-18 sm:h-22',
+    md: 'h-28 sm:h-34 md:h-38',
+    lg: 'h-38 sm:h-44 md:h-50',
   }[size];
 
   return (
@@ -468,11 +466,11 @@ export const CardView: React.FC<CardViewProps> = ({
       onClick={!disabled ? onClick : undefined}
     >
       {/* Top Header Bar: Rating & Position */}
-      <div className={`flex items-center justify-between px-1 sm:px-1.5 py-0.5 sm:py-1 z-10 ${getHeaderStyle()}`}>
-        <span className={`text-[11px] sm:text-base font-black font-sports tracking-tighter leading-none ${getRatingStyle()}`}>
+      <div className={`flex items-center justify-between px-1.5 py-1 z-10 ${getHeaderStyle()}`}>
+        <span className={`text-xs sm:text-base font-black font-sports tracking-tighter leading-none ${getRatingStyle()}`}>
           {card.rating}
         </span>
-        <span className={`text-[7px] sm:text-[9px] font-black px-1 py-0.2 sm:py-0.5 rounded border ${getPosBadgeColor()} leading-none`}>
+        <span className={`text-[8px] sm:text-[9px] font-black px-1 py-0.5 rounded border ${getPosBadgeColor()} leading-none`}>
           {card.position}
         </span>
       </div>
@@ -565,8 +563,8 @@ export const CardView: React.FC<CardViewProps> = ({
       </div>
 
       {/* Bottom Bar: Player Parody Name */}
-      <div className={`p-0.5 sm:px-1.5 sm:py-0.5 flex flex-col items-center justify-center text-center z-10 min-h-[22px] sm:min-h-[30px] ${getFooterStyle()}`}>
-        <span className="font-black text-[7.5px] sm:text-[9px] md:text-[10px] text-black uppercase tracking-tighter break-words w-full leading-[1.05] font-sports max-w-full">
+      <div className={`p-1 sm:px-1.5 sm:py-0.5 flex flex-col items-center justify-center text-center z-10 min-h-[28px] sm:min-h-[34px] ${getFooterStyle()}`}>
+        <span className="font-black text-[8px] sm:text-[9px] md:text-[10px] text-black uppercase tracking-tighter break-words w-full leading-[1.1] font-sports max-w-full">
           {card.name}
         </span>
         {getRarityText() && (
